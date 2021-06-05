@@ -25,10 +25,10 @@ namespace WindowsFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             game = Game.Singleton;
-            bx = GameRule.BX;
-            by = GameRule.BY;
-            bwidth = GameRule.B_WIDTH;
-            bheight = GameRule.B_HEIGHT;
+            bx = GameRule.BOARD_X;
+            by = GameRule.BOARD_Y;
+            bwidth = GameRule.BLOCK_WIDTH;
+            bheight = GameRule.BLOCK_HEIGHT;
             SetClientSizeCore(bx * bwidth, by * bheight);
         }
 
@@ -61,7 +61,7 @@ namespace WindowsFormsApp1
             {
                 st.X = cx * bwidth;
                 st.Y = 0;
-                et.X = st.X;
+                et.X = cx * bwidth;
                 et.Y = by * bheight;
                 graphics.DrawLine(Pens.Purple, st, et);
             }
@@ -76,21 +76,12 @@ namespace WindowsFormsApp1
                 st.X = 0;
                 st.Y = cy * bheight;
                 et.X = bx * bwidth;
-                et.Y = st.Y;
+                et.Y = cy * bheight;
                 graphics.DrawLine(Pens.Green, st, et);
             }
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Right: MoveRight(); return;
-                case Keys.Left: MoveLeft(); return;
-                case Keys.Space: MoveDown(); return;
-                case Keys.Up: MoveTurn(); return;
-            }
-        }
+        
 
         private void MoveTurn()
         {
@@ -138,6 +129,17 @@ namespace WindowsFormsApp1
         private void timer1_Tick(object sender, EventArgs e)
         {
             MoveDown();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Right: MoveRight(); return;
+                case Keys.Left: MoveLeft(); return;
+                case Keys.Space: MoveDown(); return;
+                case Keys.Up: MoveTurn(); return;
+            }
         }
     }
 }
