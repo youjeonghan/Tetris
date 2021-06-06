@@ -1,11 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace WindowsFormsApp1
 {
     static class BlockValue
     {
+        static Pen dpen;
+        static public void bcolor(int i, Graphics graphics, Rectangle now_rt)
+        {
+            if (i == 0)
+            {
+                dpen = new Pen(Color.Red, 4);
+                graphics.DrawRectangle(dpen, now_rt);
+                graphics.FillRectangle(Brushes.Red, now_rt);
+            }
+            else
+                {
+                dpen = new Pen(Color.Yellow, 4);
+                graphics.DrawRectangle(dpen, now_rt);
+                graphics.FillRectangle(Brushes.Yellow, now_rt);
+            }
+
+        }
+
         static public readonly int[,,,] bvals = new int[7, 4, 4, 4]
         {
             {

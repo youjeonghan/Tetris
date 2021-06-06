@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
         int by;
         int bwidth;
         int bheight;
+
         public Form1()
         {
             InitializeComponent();
@@ -48,6 +49,7 @@ namespace WindowsFormsApp1
                     if (game[xx, yy] != 0)
                     {
                         Rectangle now_rt = new Rectangle(xx * bwidth + 2, yy * bheight + 2, bwidth - 4, bheight - 4);
+                        //BlockValue.bcolor(game.BlockNum, graphics, now_rt);
                         graphics.DrawRectangle(Pens.Green, now_rt);
                         graphics.FillRectangle(Brushes.Red, now_rt);
                     }
@@ -57,7 +59,7 @@ namespace WindowsFormsApp1
 
         private void DrawDiagram(Graphics graphics)
         {
-            Pen dpen = new Pen(Color.Red, 4);
+            //Pen bcolor;
             Point now = game.NowPosition;
             int bn = game.BlockNum;
             int tn = game.Turn;
@@ -68,7 +70,9 @@ namespace WindowsFormsApp1
                     if (BlockValue.bvals[bn, tn, xx, yy] != 0)
                     {
                         Rectangle now_rt = new Rectangle((now.X + xx) * bwidth + 2, (now.Y + yy) * bheight + 2, bwidth - 4, bheight - 4);
-                        graphics.DrawRectangle(dpen, now_rt);
+
+                        BlockValue.bcolor(bn,graphics, now_rt);
+                        //graphics.DrawRectangle(BlockValue.bcolor(bn), now_rt);
                         //graphics.FillRectangle(Brushes.Red, now_rt);
                     }
                 }
@@ -129,8 +133,29 @@ namespace WindowsFormsApp1
             }
             else
             {
-                game.Next();
+                EndingCheck();
+            }
+        }
+        private void EndingCheck()
+        {
+            if (game.Next())
+            {
                 Invalidate();
+            }
+            else
+            {
+                timer_down.Enabled = false;
+
+                if (DialogResult.Yes == MessageBox.Show("Again?", "Game Over", MessageBoxButtons.YesNo))
+                {
+                    game.ReStart();
+                    timer_down.Enabled = true;
+                    Invalidate();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -204,7 +229,7 @@ namespace WindowsFormsApp1
             return region;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer_down_Tick(object sender, EventArgs e)
         {
             MoveDown();
         }
