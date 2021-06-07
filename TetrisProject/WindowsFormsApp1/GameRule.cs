@@ -22,14 +22,12 @@ namespace WindowsFormsApp1
         public static void reset_list()
         {
             Random random = new Random();
-            for (int i =0; i< 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 LIST_Turn.Add(random.Next() % 4);
                 LIST_BlockNum.Add(random.Next() % 7);
-                
+
             }
         }
-
-
     }
 }
