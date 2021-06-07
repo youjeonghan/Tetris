@@ -71,6 +71,7 @@ namespace WindowsFormsApp1
                     {
                         ClearLine(y - yy);
                         y++;
+                        GameRule.add();
                     }
                 }
             }

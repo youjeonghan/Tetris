@@ -11,6 +11,11 @@ namespace WindowsFormsApp1
         internal const int BOARD_X = 12;
         internal const int BOARD_Y = 20;
         internal const int START_X = 4;
-        internal const int START_Y = 0; 
+        internal const int START_Y = 0;
+        internal static int SCORE = 12;
+        public static void add()
+        {
+            SCORE += 12;
+        }
     }
 }

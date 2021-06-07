@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
         int by;
         int bwidth;
         int bheight;
+        public int score;
 
         public Form1()
         {
@@ -30,7 +31,8 @@ namespace WindowsFormsApp1
             by = GameRule.BOARD_Y;
             bwidth = GameRule.BLOCK_WIDTH;
             bheight = GameRule.BLOCK_HEIGHT;
-            SetClientSizeCore(bx * bwidth, by * bheight);
+            score = 0;
+            SetClientSizeCore(bx * bwidth *2, by * bheight);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -49,9 +51,9 @@ namespace WindowsFormsApp1
                     if (game[xx, yy] != 0)
                     {
                         Rectangle now_rt = new Rectangle(xx * bwidth + 2, yy * bheight + 2, bwidth - 4, bheight - 4);
-                        //BlockValue.bcolor(game.BlockNum, graphics, now_rt);
+
                         graphics.DrawRectangle(Pens.Green, now_rt);
-                        graphics.FillRectangle(Brushes.Red, now_rt);
+                        graphics.FillRectangle(Brushes.Gold, now_rt);
                     }
                 }
             }
@@ -71,7 +73,7 @@ namespace WindowsFormsApp1
                     {
                         Rectangle now_rt = new Rectangle((now.X + xx) * bwidth + 2, (now.Y + yy) * bheight + 2, bwidth - 4, bheight - 4);
 
-                        BlockValue.bcolor(bn,graphics, now_rt);
+                        BlockValue.bcolor(bn, graphics, now_rt);
                         //graphics.DrawRectangle(BlockValue.bcolor(bn), now_rt);
                         //graphics.FillRectangle(Brushes.Red, now_rt);
                     }
@@ -89,7 +91,7 @@ namespace WindowsFormsApp1
         {
             Point st = new Point();
             Point et = new Point();
-            for (int cx = 0; cx < bx; cx++)
+            for (int cx = 0; cx < bx+1; cx++)
             {
                 st.X = cx * bwidth;
                 st.Y = 0;
@@ -126,6 +128,7 @@ namespace WindowsFormsApp1
 
         private void MoveDown()
         {
+            label2.Text = GameRule.SCORE.ToString();
             if (game.MoveDown())
             {
                 Region rg = MakeRegion(0, -1);
@@ -232,6 +235,7 @@ namespace WindowsFormsApp1
         private void timer_down_Tick(object sender, EventArgs e)
         {
             MoveDown();
+            
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

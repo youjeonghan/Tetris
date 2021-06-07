@@ -7,20 +7,36 @@ namespace WindowsFormsApp1
 {
     static class BlockValue
     {
-        static Pen dpen;
         static public void bcolor(int i, Graphics graphics, Rectangle now_rt)
         {
+            graphics.DrawRectangle(Pens.Green, now_rt);
             if (i == 0)
             {
-                dpen = new Pen(Color.Red, 4);
-                graphics.DrawRectangle(dpen, now_rt);
+                graphics.FillRectangle(Brushes.SkyBlue, now_rt);
+            }
+            else if (i==1)
+            {
+                graphics.FillRectangle(Brushes.Yellow, now_rt);
+            }
+            else if (i == 2)
+            {
+                graphics.FillRectangle(Brushes.Orange, now_rt);
+            }
+            else if (i == 3)
+            {
+                graphics.FillRectangle(Brushes.Blue, now_rt);
+            }
+            else if (i == 4)
+            {
+                graphics.FillRectangle(Brushes.Purple, now_rt);
+            }
+            else if (i == 5)
+            {
                 graphics.FillRectangle(Brushes.Red, now_rt);
             }
-            else
-                {
-                dpen = new Pen(Color.Yellow, 4);
-                graphics.DrawRectangle(dpen, now_rt);
-                graphics.FillRectangle(Brushes.Yellow, now_rt);
+            else if (i == 6)
+            {
+                graphics.FillRectangle(Brushes.Green, now_rt);
             }
 
         }
