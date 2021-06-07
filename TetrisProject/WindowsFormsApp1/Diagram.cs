@@ -37,8 +37,10 @@ namespace WindowsFormsApp1
             Random random = new Random();
             X = GameRule.START_X;
             Y = GameRule.START_Y;
-            Turn = random.Next() % 4;
-            BlockNum = random.Next() % 7;
+            //Turn = random.Next() % 4;
+            //BlockNum = random.Next() % 7;
+            Turn = GameRule.LIST_Turn[GameRule.LIST_IDX-1];
+            BlockNum = GameRule.LIST_BlockNum[GameRule.LIST_IDX-1];
         }
         internal void MoveLeft()
         {

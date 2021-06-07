@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
             bwidth = GameRule.BLOCK_WIDTH;
             bheight = GameRule.BLOCK_HEIGHT;
             score = 0;
-            SetClientSizeCore(bx * bwidth *2, by * bheight);
+            SetClientSizeCore(bx * bwidth * 2, by * bheight);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -40,7 +40,36 @@ namespace WindowsFormsApp1
             DrawGraduation(e.Graphics);
             DrawDiagram(e.Graphics);
             DrawBoard(e.Graphics);
+            WaitBlock(e.Graphics);
             DoubleBuffered = true;
+        }
+        private void WaitBlock(Graphics graphics)
+        {
+            int idx = GameRule.LIST_IDX;
+            int[] bn = new int[] { GameRule.LIST_BlockNum[idx], GameRule.LIST_BlockNum[idx + 1] };
+            int[] tn = new int[] { GameRule.LIST_Turn[idx], GameRule.LIST_Turn[idx + 1] };
+
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int xx = 0; xx < 4; xx++)
+                {
+                    for (int yy = 0; yy < 4; yy++)
+                    {
+                        if (BlockValue.bvals[bn[i], tn[i], xx, yy] != 0)
+                        {
+                            Rectangle now_rt = new Rectangle((16 + xx) * bwidth + 2, (5 + (i * 5) + yy) * bheight + 2, bwidth - 4, bheight - 4);
+
+                            BlockValue.bcolor(bn[i], graphics, now_rt);
+                            //graphics.DrawRectangle(BlockValue.bcolor(bn), now_rt);
+                            //graphics.FillRectangle(Brushes.Red, now_rt);
+                        }
+                    }
+                }
+            }
+            Random random = new Random();
+            GameRule.LIST_Turn.Add(random.Next() % 4);
+            GameRule.LIST_BlockNum.Add(random.Next() % 7);
         }
         private void DrawBoard(Graphics graphics)
         {
@@ -91,7 +120,7 @@ namespace WindowsFormsApp1
         {
             Point st = new Point();
             Point et = new Point();
-            for (int cx = 0; cx < bx+1; cx++)
+            for (int cx = 0; cx < bx + 1; cx++)
             {
                 st.X = cx * bwidth;
                 st.Y = 0;
@@ -136,6 +165,7 @@ namespace WindowsFormsApp1
             }
             else
             {
+                GameRule.LIST_IDX += 1;
                 EndingCheck();
             }
         }
@@ -149,9 +179,10 @@ namespace WindowsFormsApp1
             {
                 timer_down.Enabled = false;
 
-                if (DialogResult.Yes == MessageBox.Show("Again?", "Game Over", MessageBoxButtons.YesNo))
+                if (DialogResult.Yes == MessageBox.Show($"Score {GameRule.SCORE}\nAgain?", "Game Over", MessageBoxButtons.YesNo))
                 {
                     game.ReStart();
+                    GameRule.reset();
                     timer_down.Enabled = true;
                     Invalidate();
                 }
@@ -235,7 +266,7 @@ namespace WindowsFormsApp1
         private void timer_down_Tick(object sender, EventArgs e)
         {
             MoveDown();
-            
+
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -245,8 +276,10 @@ namespace WindowsFormsApp1
                 case Keys.Right: MoveRight(); return;
                 case Keys.Left: MoveLeft(); return;
                 case Keys.Space: MoveDown(); return;
+                case Keys.Down: MoveDown(); return;
                 case Keys.Up: MoveTurn(); return;
             }
         }
+
     }
 }

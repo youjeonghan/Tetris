@@ -49,7 +49,9 @@ namespace WindowsFormsApp1
         }
         static Game()
         {
+            GameRule.reset_list();
             Singleton = new Game();
+            
         }
         Game()
         {
